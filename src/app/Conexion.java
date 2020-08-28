@@ -7,6 +7,7 @@ package app;
 
 import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -66,11 +67,26 @@ public class Conexion extends javax.swing.JFrame {
     private void btnConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConectarActionPerformed
         //Codigo del boton Conectar
         
-        
-        
     }//GEN-LAST:event_btnConectarActionPerformed
     
-   
+          // Metodo para realizar la conexion
+        public static Connection getConection(){
+            
+            //Declaracion de una variable de tipo connection
+            Connection con = null;
+            
+            try {
+                
+                Class.forName("com.mysql.jdbc.Driver");
+                con = (Connection) DriverManager.getConnection(URL, USERNAME, PASSWORD);
+                JOptionPane.showMessageDialog(null, "Conexion exitosa");
+                
+            } catch (Exception e) {
+                
+                System.out.println(e);
+            }
+        return null;
+        }
     
     /**
      * @param args the command line arguments
