@@ -7,6 +7,8 @@ package app;
 
 import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 /**
@@ -65,7 +67,29 @@ public class Conexion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConectarActionPerformed
-        //Codigo del boton Conectar
+        //Codigo del boton Conectar 
+        //Al presionar el boton se ejecutara la conexion y realice una consulta
+        try {
+            Connection con = null;
+            con = getConection();
+            PreparedStatement ps;
+            ResultSet res;
+            
+            ps = con.prepareStatement("SELECT * FROM cliente");
+            res = ps.executeQuery();
+            
+            if(res.next()){
+                JOptionPane.showMessageDialog(null, res.getString("id_cliente") + " " + res.getString("nombre_cliente") + " " + res.getString("direccion_cliente") + " " + res.getInt("saldo_cliente"));
+            }else{
+                JOptionPane.showMessageDialog(null, "No hay datos");
+            }
+            
+            //comando para cerrar la conexión
+            con.close();
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         
     }//GEN-LAST:event_btnConectarActionPerformed
     
@@ -85,7 +109,7 @@ public class Conexion extends javax.swing.JFrame {
                 
                 System.out.println(e);
             }
-        return null;
+        return con;
         }
     
     /**
